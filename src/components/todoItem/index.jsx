@@ -6,17 +6,16 @@ export const TodoItem = props => {
     return (
         <form
             className={css.todoItem}
-            onSubmit={(e) => {
-                e.preventDefault();
-                props.onRemove()
-            }}
         >
             <div>
                 {props.text}
             </div>
             <button
                 className={css.removeButton}
-                type={'submit'}
+                onClick={(e) => {
+                    e.preventDefault();
+                    props.onRemove();
+                }}
             >
                 Remove
             </button>
