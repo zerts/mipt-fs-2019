@@ -3,11 +3,11 @@ import css from './styles.module.scss';
 import {TodoItem} from "../../components/todoItem";
 import {TodoListAdder} from "../../components/todoItemAdder";
 import {connect} from "react-redux";
-import {addTodoItem, removeTodoItem} from "../../actions";
+import {ADD_TODO_ITEM, addTodoItem, removeTodoItem} from "../../actions";
 
 export class _ToDoList extends React.Component {
     state = {
-        todoList: [{id: '3', text: 'first'}],
+        todoList: [],
         loading: true,
     };
 
@@ -26,7 +26,7 @@ export class _ToDoList extends React.Component {
     };
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
         return (
             <div>
                 {this.state.loading ?
@@ -38,7 +38,7 @@ export class _ToDoList extends React.Component {
                         </div>
                     </div> :
                     <div className={css.todoList}>
-                        {this.state.todoList.map(item =>
+                        {this.props.todo.map(item =>
                             <TodoItem
                                 key={item.id}
                                 text={item.text}
@@ -50,13 +50,13 @@ export class _ToDoList extends React.Component {
                         )}
                         <TodoListAdder
                             onCreate={item => {
-                                this.setState(prevState => ({
-                                    todoList: [
-                                        ...prevState.todoList,
-                                        item
-                                    ]
-                                }));
-                                this.props.addTodoItem(item);
+                                // this.setState(prevState => ({
+                                //     todoList: [
+                                //         ...prevState.todoList,
+                                //         item
+                                //     ]
+                                // }));
+                                this.props.addTodoItem2(item);
                             }}
                         />
                     </div>}
@@ -66,11 +66,17 @@ export class _ToDoList extends React.Component {
 }
 
 export const ToDoList = connect(
-    state => ({
-        todo: state.todo
+    store => ({
+        todo: store.todo,
     }),
     dispatch => ({
-        addTodoItem(item) {
+
+        // export const addTodoItem = item => ({
+        //     type: ADD_TODO_ITEM,
+        //     payload: { item }
+        // });
+
+        addTodoItem2(item) {
             dispatch(addTodoItem(item));
         },
         removeTodoItem(id) {

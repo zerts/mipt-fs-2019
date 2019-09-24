@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import todoReducer from './todo';
+import { todoReducer } from './todo';
 
 const logger = store => next => action => {
 	let result;
@@ -14,12 +14,15 @@ const logger = store => next => action => {
 
 const saver = store => next => action => {
 	let result = next(action);
-	// localStorage['mipt-web'] = JSON.stringify(store.getState());
+	localStorage['mipt-web'] = JSON.stringify(store.getState());
 	return result;
 };
 
 const initStorage = (initialState = {}) => {
-	return initialState; //localStorage['mipt-web'] ? JSON.parse(localStorage['mipt-web']) : initialState;
+	return initialState =
+		localStorage['mipt-web'] ?
+			JSON.parse(localStorage['mipt-web']) :
+			initialState;
 };
 
 export const storeFactory = (initialState = {}) => (
