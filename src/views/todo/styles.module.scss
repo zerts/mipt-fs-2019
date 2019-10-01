@@ -51,22 +51,24 @@
 .listItemEnter {
   opacity: 0;
   transform-origin: 0 0;
-  transform: translateY(20px) scaleY(0);
+  max-height: 0;
+  //transform: translateY(20px) scaleY(0);
 }
 .listItemEnterActive {
   opacity: 1;
-  transform: translateY(0) scaleY(1);
+  //transform: translateY(0) scaleY(1);
+  max-height: 5rem;
   transform-origin: 0 0;
-  transition: opacity 300ms, transform 300ms;
+  transition: opacity 300ms, max-height 300ms;
 }
 .listItemExit {
   opacity: 1;
+  max-height: 5rem;
   transform-origin: 0 0;
-  transform: translateY(0) scaleY(1);
 }
 .listItemExitActive {
   opacity: 0;
   transform-origin: 0 0;
-  transition: opacity 300ms, transform 300ms;
-  transform: translateY(-20px) scaleY(0);
+  max-height: 0;
+  transition: opacity 300ms, max-height 300ms;
 }

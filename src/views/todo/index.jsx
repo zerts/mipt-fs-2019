@@ -9,18 +9,35 @@ import {
     TransitionGroup,
 } from 'react-transition-group';
 
+const sleep = (ms) =>
+    new Promise(resolve => setTimeout(resolve, ms));
+
+const getData = async () => {
+    await sleep(3000);
+    return {
+        data: {
+            todoList: [
+                {
+                    id: 'wfoiwjefoiwejfoiej',
+                    text: 'First item',
+                }
+            ]
+        }
+    }
+};
+
 export class _ToDoList extends React.Component {
     state = {
         todoList: [],
         loading: true,
     };
 
-    componentDidMount() {
-        setTimeout(
-            () =>
-                this.setState({loading: false}),
-            1000
-        );
+    async componentDidMount() {
+        let { data } = await getData();
+        this.setState({
+            todoList: data.todoList,
+            loading: false
+        })
     }
 
     onRemove = (id) => {
@@ -42,10 +59,10 @@ export class _ToDoList extends React.Component {
                         </div>
                     </div> :
                     <TransitionGroup className={css.todoList}>
-                        {this.props.todo.map(item =>
+                        {this.state.todoList.map(item =>
                             <CSSTransition
                                 key={item.id}
-                                timeout={500}
+                                timeout={3000}
                                 classNames={{
                                     enter: css.listItemEnter,
                                     enterActive: css.listItemEnterActive,
