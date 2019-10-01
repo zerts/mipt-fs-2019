@@ -47,3 +47,26 @@
     height: 26px;
   }
 }
+
+.listItemEnter {
+  opacity: 0;
+  transform-origin: 0 0;
+  transform: translateY(20px) scaleY(0);
+}
+.listItemEnterActive {
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  transform-origin: 0 0;
+  transition: opacity 300ms, transform 300ms;
+}
+.listItemExit {
+  opacity: 1;
+  transform-origin: 0 0;
+  transform: translateY(0) scaleY(1);
+}
+.listItemExitActive {
+  opacity: 0;
+  transform-origin: 0 0;
+  transition: opacity 300ms, transform 300ms;
+  transform: translateY(-20px) scaleY(0);
+}

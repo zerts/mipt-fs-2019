@@ -3,7 +3,11 @@ import css from './styles.module.scss';
 import {TodoItem} from "../../components/todoItem";
 import {TodoListAdder} from "../../components/todoItemAdder";
 import {connect} from "react-redux";
-import {ADD_TODO_ITEM, addTodoItem, removeTodoItem} from "../../actions";
+import {addTodoItem, removeTodoItem} from "../../actions";
+import {
+    CSSTransition,
+    TransitionGroup,
+} from 'react-transition-group';
 
 export class _ToDoList extends React.Component {
     state = {
@@ -37,16 +41,26 @@ export class _ToDoList extends React.Component {
                             <div/>
                         </div>
                     </div> :
-                    <div className={css.todoList}>
+                    <TransitionGroup className={css.todoList}>
                         {this.props.todo.map(item =>
-                            <TodoItem
+                            <CSSTransition
                                 key={item.id}
+                                timeout={500}
+                                classNames={{
+                                    enter: css.listItemEnter,
+                                    enterActive: css.listItemEnterActive,
+                                    exit: css.listItemExit,
+                                    exitActive: css.listItemExitActive,
+                                }}
+                            >
+                            <TodoItem
                                 text={item.text}
                                 onRemove={() => {
                                     this.onRemove(item.id);
                                     this.props.removeTodoItem(item.id);
                                 }}
                             />
+                            </CSSTransition>
                         )}
                         <TodoListAdder
                             onCreate={item => {
@@ -59,7 +73,7 @@ export class _ToDoList extends React.Component {
                                 this.props.addTodoItem2(item);
                             }}
                         />
-                    </div>}
+                    </TransitionGroup>}
             </div>
         )
     }
@@ -70,12 +84,6 @@ export const ToDoList = connect(
         todo: store.todo,
     }),
     dispatch => ({
-
-        // export const addTodoItem = item => ({
-        //     type: ADD_TODO_ITEM,
-        //     payload: { item }
-        // });
-
         addTodoItem2(item) {
             dispatch(addTodoItem(item));
         },
